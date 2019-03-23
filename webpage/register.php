@@ -2,6 +2,26 @@
 
 include('connection.php');
 
+$isPost = $_SERVER["REQUEST_METHOD"] == "POST";
+
+$username = "";
+$fullname = "";
+$email = "";
+$pwd = "";
+$confirm_pwd = "";
+
+if ($isPost){
+	$username = $_POST['username'];
+	$fullname = $_POST['fullname'];
+	$email = $_POST['email'];
+	$pwd = $_POST['pwd'];
+	$confirm_pwd = $_POST['confirm_pwd'];
+
+	$statement = $blog_db->prepare("INSERT INTO users (username, email, password, fullname) VALUES (?,?,?,?)");
+
+	$statement->execute([$username, $email, $pwd, $fullname]);
+	header('Location: index.php');
+}
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
